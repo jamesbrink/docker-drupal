@@ -6,7 +6,7 @@ FROM ubuntu:vivid
 MAINTAINER James Brink, brink.james@gmail.com
 
 # Setup needed dependencies
-RUN apt-get update && apt-get install -y curl sendmail apache2 git php5 php5-cli php5-curl php5-gd php5-imagick php5-cli php5-mysql mysql-client php5-pecl php5-apcu && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl sendmail apache2 git php5 php5-cli php5-curl php5-gd php5-imagick php5-cli php5-mysql mysql-client php5-pecl-http php5-apcu && rm -rf /var/lib/apt/lists/*
 
 # Prep apache for Drupal
 RUN rm -rf /var/www/html/*
