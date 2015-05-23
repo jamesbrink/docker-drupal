@@ -7,8 +7,9 @@ CREATE DATABASE ${MYSQL_DRUPAL_SCHEMA};
 GRANT ALL PRIVILEGES ON ${MYSQL_DRUPAL_SCHEMA}.* TO '${MYSQL_DRUPAL_USER}'@'%';
 FLUSH PRIVILEGES;
 "
+
 # First time setup
-if [[ ! -a /setup-completed ]]; then
+if [[ ! -a /setup-completed && $((`ls -alrt /var/www/html/|wc -l`-3)) == 0 ]]; then
   echo "Running first time setup."
   # Make sure MySQL is up before we try to do install (useful for docker-compose)
   /local/opt/docker-assets/bin/wait_for_mysql.sh
