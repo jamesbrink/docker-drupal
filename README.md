@@ -1,5 +1,5 @@
 #Docker Container for Drupal#
-==================================
+------------------------------
 A configurable Docker container for Drupal.
 
 
