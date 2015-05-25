@@ -6,16 +6,33 @@ FROM ubuntu:vivid
 MAINTAINER James Brink, brink.james@gmail.com
 
 # Setup needed dependencies
-RUN apt-get update && apt-get install -y curl sendmail apache2 git php5 php5-cli php5-curl php5-gd php5-imagick php5-cli php5-mysql mysql-client php5-pecl-http php5-apcu && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+  apache2 \
+  curl \
+  git \
+  mysql-client \
+  php5 \
+  php5-apcu \
+  php5-cli \
+  php5-cli \
+  php5-curl \
+  php5-gd \
+  php5-imagick \
+  php5-mysql \
+  php5-pecl-http \
+  sendmail \
+  && rm -rf /var/lib/apt/lists/*
 
 # Prep apache for Drupal
-RUN rm -rf /var/www/html/*
-RUN a2enmod rewrite && a2enmod authz_groupfile
-RUN sed -i "s/AllowOverride None/AllowOverride All/" /etc/apache2/apache2.conf
-RUN mkdir -p /local/opt/docker-assets
+RUN rm -rf /var/www/html/* \
+  && a2enmod rewrite && a2enmod authz_groupfile \
+  && sed -i "s/AllowOverride None/AllowOverride All/" /etc/apache2/apache2.conf \
+  && mkdir -p /local/opt/docker-assets \
+  # Install composer
+  && curl https://getcomposer.org/installer | php \
+  && mv composer.phar /usr/local/bin/composer \
+  && composer global require drush/drush:7.*
 
-# Install composer
-RUN curl https://getcomposer.org/installer | php &&  mv composer.phar /usr/local/bin/composer && composer global require drush/drush:7.*
 ENV PATH /local/opt/docker-assets/bin:/root/.composer/vendor/bin:$PATH
 
 # Variables for Drupal
